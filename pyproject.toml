@@ -1,7 +1,7 @@
 [project]
 name = "qnahub"
 version = "0.1.0"
-description = "Add your description here"
+description = "This is a simple Q&A app"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []

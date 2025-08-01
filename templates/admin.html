@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- Questions Feed -->
+<div class="col-lg-9">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4">All Questions</h2>
+    <div class="dropdown">
+      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        Sort by: Newest
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#">Newest</a></li>
+        <li><a class="dropdown-item" href="#">Most Voted</a></li>
+        <li><a class="dropdown-item" href="#">Most Answered</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Question Card -->
+  <div class="card mb-3 shadow-sm question-card border-primary">
+    <div class="card-body">
+      <div class="d-flex">
+        <div class="text-center me-3">
+          <div class="fw-bold fs-5">12</div>
+          <div class="text-muted small">votes</div>
+        </div>
+        <div class="text-center me-3">
+          <div class="fw-bold fs-5">5</div>
+          <div class="text-muted small">answers</div>
+        </div>
+        <div class="flex-grow-1">
+          <h5 class="card-title"><a href="question.html" class="text-decoration-none">How to
+              vertically center a div?</a></h5>
+          <div class="mb-2">
+            <span class="badge bg-primary-subtle text-primary-emphasis">CSS</span>
+            <span class="badge bg-warning-subtle text-warning-emphasis">HTML</span>
+          </div>
+          <div class="text-muted small">
+            asked by <a href="#">John Doe</a> 2 hours ago
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Another Question Card -->
+  <div class="card mb-3 shadow-sm question-card border-success">
+    <div class="card-body">
+      <div class="d-flex">
+        <div class="text-center me-3">
+          <div class="fw-bold fs-5">42</div>
+          <div class="text-muted small">votes</div>
+        </div>
+        <div class="text-center me-3">
+          <div class="fw-bold fs-5">15</div>
+          <div class="text-muted small">answers</div>
+        </div>
+        <div class="flex-grow-1">
+          <h5 class="card-title"><a href="question.html" class="text-decoration-none">What is the
+              difference between let, var, and const in JavaScript?</a></h5>
+          <div class="mb-2">
+            <span class="badge bg-info-subtle text-info-emphasis">JavaScript</span>
+          </div>
+          <div class="text-muted small">
+            asked by <a href="#">Jane Smith</a> 1 day ago
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
