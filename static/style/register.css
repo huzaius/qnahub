@@ -1,4 +1,9 @@
-
+.container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 100vh; /* Ensures the container takes full viewport height */
+}
 .modern-form {
   --primary: #3b82f6;
   --primary-dark: #2563eb;

@@ -7,17 +7,20 @@ app = Flask(__name__)
 
 
 @app.route("/")
+@app.route("/base")
+def base():
+    return render_template("base.html")
+
+
+
 @app.route("/index")
 def index():
     return render_template("index.html")
 
-@app.route("/admin")
-def admin():
-    return render_template("admin.html")
 
-@app.route("/user")
-def user():
-    return render_template("user.html")
+@app.route("/question")
+def question():
+    return render_template("question.html",title="Question")
 
 @app.route("/login")
 def login():
@@ -31,9 +34,15 @@ def register():
 def users():
     return render_template("users.html")
 
-@app.route("/dashboard")
-def dasboard():
-    return render_template("dashboard.html")
+@app.route("/subjects")
+def subjects():
+    return render_template("subjects.html")
+
+@app.route("/unanswered")
+def unanswered():
+    return render_template("unanswered.html")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

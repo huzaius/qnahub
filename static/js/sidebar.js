@@ -2,17 +2,18 @@
 // Handle active state for sidebar navigation
 document.addEventListener('DOMContentLoaded', function () {
     const sidebarLinks = document.querySelectorAll('#sidebar-nav .list-group-item-action');
+    const currentPath = window.location.pathname;
 
     sidebarLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
-            // Prevent default link behavior
-            event.preventDefault();
+        // The link's href attribute contains the full URL. We need to compare pathnames.
+        const linkPath = new URL(link.href).pathname;
 
-            // Remove 'active' class from all sidebar links
-            sidebarLinks.forEach(l => l.classList.remove('active'));
-
-            // Add 'active' class to the clicked link
-            this.classList.add('active');
-        });
+        if (linkPath === currentPath) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
     });
+    
 });
+

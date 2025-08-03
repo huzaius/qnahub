@@ -1,4 +1,7 @@
-<script src="{{ url_for('static', filename='js/login.css') }}"></script>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}">
+<div class="container">
 <div class="form-container">
   <p class="title">Welcome back</p>
   <form class="form">
@@ -10,7 +13,7 @@
     <button class="form-btn">Log in</button>
   </form>
   <p class="sign-up-label">
-    Don't have an account?<span class="sign-up-link">Sign up</span>
+    Don't have an account? <a href="{{ url_for('register')  }}" class="sign-up-link">Sign up</a>
   </p>
   <div class="buttons-container">
     <div class="apple-login-button">
@@ -39,4 +42,5 @@
       <span>Log in with Google</span>
     </div>
   </div>
+</div>
 </div>

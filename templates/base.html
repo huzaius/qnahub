@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q&A Hub - Home</title>
+    <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-chat-left-dots-fill text-primary"></i> Q&A
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}"><i
+                    class="bi bi-chat-left-dots-fill text-primary"></i> Q&A
                 Hub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -38,15 +39,15 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- ANONYMOUS USER VIEW -->
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary me-2" href="#">Sign In</a>
+                        <a class="btn btn-outline-primary me-2" href="{{ url_for('login') }}">Sign In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="#">Sign Up</a>
+                        <a class="btn btn-primary" href="{{ url_for('register') }}">Sign Up</a>
                     </li>
 
                     <!-- LOGGED-IN USER VIEW (for reference)
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="ask.html">Ask a Question</a>
+                        <a class="btn btn-primary" href="{{ url_for('question') }}">Ask a Question</a>
                     </li>
                     <li class="nav-item dropdown ms-lg-3 mt-2 mt-lg-0">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
@@ -69,26 +70,29 @@
     <div class="container mt-4">
         <div class="row">
             <!-- Sidebar -->
+            
             <div class="col-lg-3">
                 <div class="list-group shadow-sm" id="sidebar-nav">
-                    <a href="#" class="list-group-item list-group-item-action active"><i
+                    <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action"><i
                             class="bi bi-house-fill me-2"></i> Home</a>
-                    <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-tags-fill me-2"></i>
+                    <a href="{{ url_for('subjects') }}" class="list-group-item list-group-item-action"><i class="bi bi-tags-fill me-2"></i>
                         Subjects</a>
-                    <a href="#" class="list-group-item list-group-item-action"><i class="bi bi-people-fill me-2"></i>
+                    <a href="{{ url_for('users') }}" class="list-group-item list-group-item-action"><i class="bi bi-people-fill me-2"></i>
                         Users</a>
-                    <a href="#" class="list-group-item list-group-item-action"><i
+                    <a href="{{ url_for('unanswered')}}" class="list-group-item list-group-item-action"><i
                             class="bi bi-patch-question-fill me-2"></i> Unanswered</a>
                 </div>
                 <div class="mt-4">
-                    <a class="btn btn-primary w-100" href="ask.html">Ask a Question</a>
+                    <a class="btn btn-primary w-100" href="{{ url_for('question') }}">Ask a Question</a>
                 </div>
             </div>
 
+           
 
-            {% block content %}
-            {% endblock %}
-            
+            <div class="col-lg-9">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 

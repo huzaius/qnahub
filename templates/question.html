@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %} Questions {% endblock %}
+<!-- Ask a Question -->
+{% block content %}
+
+<!-- Main Content -->
+
+  <div class="row justify-content-center">
+   
+      <h2 class="fw-bold mb-4">Ask a Question</h2>
+
+      <!-- === Logged-IN User View: The Form === -->
+      <!-- To use this view, uncomment it and comment out the "Logged-OUT User View" -->
+      <div class="card form-card">
+        <div class="card-body p-4">
+          <form>
+            <!-- Title Field -->
+            <div class="mb-3">
+              <label for="question-title" class="form-label fw-semibold">Title</label>
+              <p class="form-text text-muted mt-0 mb-1">Give a title close enough to your quesion(s).</p>
+              <input type="text" class="form-control" id="question-title"
+                placeholder="e.g., How do I improve my eeman?">
+            </div>
+
+            <!-- Body Field -->
+            <div class="mb-3">
+              <label for="question-body" class="form-label fw-semibold">Body</label>
+              <p class="form-text text-muted mt-0 mb-1">Include all the information someone would need to answer your
+                question.</p>
+              <textarea class="form-control" id="question-body" rows="10"></textarea>
+            </div>
+
+            <!-- Subjects/Tags Field -->
+            <div class="mb-3">
+              <label for="question-subjects" class="form-label fw-semibold">Subject(s)</label>
+              <p class="form-text text-muted mt-0 mb-1">Add subject(s) to describe what your question is about.
+              </p>
+              <input type="text" class="form-control" id="question-subjects"
+                placeholder="e.g., Dua Eeeman">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Post Your Question</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- === Logged-OUT User View: The Prompt === -->
+      <!-- To use this view, uncomment it and comment out the "Logged-IN User View" -->
+      <!--
+                <div class="card text-center p-5">
+                    <div class="card-body">
+                        <i class="bi bi-lock-fill fs-1 text-primary mb-3"></i>
+                        <h4 class="card-title">You need to be logged in to ask a question.</h4>
+                        <p class="card-text">Create an account or sign in to join the community.</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary">Sign In</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-secondary">Create an account</a>
+                    </div>
+                </div>
+                -->
+   
+  </div>
+
+
+{% endblock %}
