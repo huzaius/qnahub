@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request,url_for,redirect,flash
-
+from forms import RegistrationForm,LoginForm
 
 
 
@@ -22,13 +22,15 @@ def index():
 def question():
     return render_template("question.html",title="Question")
 
-@app.route("/login")
+@app.route("/login",methods=["GET","POST"])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    return render_template("login.html",form=form)
 
-@app.route("/register")
+@app.route("/register",methods=["GET","POST"])
 def register():
-    return render_template("register.html")
+    form = RegistrationForm()
+    return render_template("register.html",form=form)
 
 @app.route("/users")
 def users():
