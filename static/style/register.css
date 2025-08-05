@@ -214,3 +214,23 @@
 .form-input:not(:placeholder-shown):invalid ~ .input-icon {
   color: #ef4444;
 }
+
+.form-input.is-invalid {
+  border-color: #e74c3c;
+  /* A softer red for the border */
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+  /* A subtle glow */
+}
+
+.invalid-feedback {
+  color: #e74c3c;
+  font-size: 0.875em;
+  padding-top: 4px;
+  text-align: left;
+  width: 100%;
+}
+
+.invalid-feedback span {
+  display: block;
+}
+

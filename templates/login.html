@@ -1,29 +1,93 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}">
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<style>
+  body {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+  }
 
+  .login-card {
+    width: 100%;
+    max-width: 420px;
 
-<div class="container">
-  <div class="form-container">
-    <p class="title">Welcome back</p>
-    <form class="form" method="post" action="{{ url_for('login') }}">
-      {# CSRF protection with Flask-WTF #}
-      {{ form.hidden_tag() if form.hidden_tag }}
+  }
 
-      
-      {{ form.email(class="input", placeholder="Email") }}
-      {{ form.password(class="input", placeholder="Password") }}
-      <div class="page-link">
-        <div class="form-check">
-          {{ form.remember(class="form-check-input") }}
-          {{ form.remember.label(class="form-check-label") }}
+  .form-btn {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 0 !important;
+    outline: 0 !important;
+    background: teal;
+    color: white;
+    cursor: pointer;
+    box-shadow: rgba(175, 90, 90, 0.24) 0px 3px 8px;
+  }
+</style>
+<div class="container vh-100 d-flex justify-content-center align-items-center flex">
+  <div class="card login-card p-4 shadow-sm ">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4 fw-bold">Welcome Back</h3>
+
+      <form method="POST" action="{{ url_for('login') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        {# Email Field #}
+        <div class="mb-3 ">
+          {{ form.email(class="form-control rounded-pill" + (" is-invalid" if form.email.errors else ""),
+          placeholder="name@example.com") }}
+          {% if form.email.errors %}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        <a href="#" class="page-link-label">Forgot Password?</a>
-      </div>
-      <button type="submit" class="form-btn">Log in</button>
+
+        {# Password Field #}
+        <div class="mb-3">
+
+          <div class="input-group">
+            {{ form.password(id="password", class="form-control" + (" is-invalid" if form.password.errors else ""),
+            placeholder="Password") }}
+            <button class="btn btn-outline-secondary " type="button" onclick="togglePassword(this)">
+              <i class="bi bi-eye-slash"></i>
+            </button>
+          </div>
+          {% if form.password.errors %}
+          <div class="invalid-feedback d-block">
+            {% for error in form.password.errors %}
+            <span>{{ error }}</span><br>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        {# Remember Me & Forgot Password #}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+          </div>
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        {# Submit Button #}
+        <div class="d-grid">
+          <button type="submit" class="btn form-btn">Log In</button>
+        </div>
+      </form>
+
+      <p class="text-center mt-4 text-muted">
+        Don't have an account? <a href="{{ url_for('register') }}">Sign up</a>
+      </p>
+    </div>
     </form>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='js/passwordtoggle.js') }}"></script>
 
-    <p class="sign-up-label">
-      Don't have an account? <a href="{{ url_for('register')  }}" class="sign-up-link">Sign up</a>
-    </p>
   </div>
 </div>
+{% endblock %}

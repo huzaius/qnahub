@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPath = window.location.pathname;
 
     sidebarLinks.forEach(link => {
-        // The link's href attribute contains the full URL. We need to compare pathnames.
+
         const linkPath = new URL(link.href).pathname;
 
         if (linkPath === currentPath) {
