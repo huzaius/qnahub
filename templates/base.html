@@ -70,8 +70,8 @@
     <div class="container mt-4">
         <div class="row">
             <!-- Sidebar -->
-            {% if title == 'Login' %} 
-            
+            {% if title == 'Login' %}
+
             {% else %}
             <div class="col-lg-3">
                 <div class="list-group shadow-sm" id="sidebar-nav">
@@ -85,9 +85,14 @@
                         Users</a>
                     <a href="{{ url_for('unanswered')}}" class="list-group-item list-group-item-action"><i
                             class="bi bi-patch-question-fill me-2"></i> Unanswered</a>
+                    <a href="{{ url_for('question')}}" class="list-group-item list-group-item-action"><i
+                            class="bi bi-patch-question-fill me-2"></i> question</a>
+                    <a href="{{ url_for('base')}}" class="list-group-item list-group-item-action"><i
+                            class="bi bi-patch-question-fill me-2"></i> base</a>
+                    
                 </div>
                 <div class="mt-4">
-                    <a class="btn btn-primary w-100" href="{{ url_for('question') }}">Ask a Question</a>
+                    <a class="btn btn-primary w-100" href="{{ url_for('users') }}">Ask a Question</a>
                 </div>
             </div>
             {% endif %}
