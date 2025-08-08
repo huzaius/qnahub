@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from main import db  # Note: Consider moving db to its own file to avoid circular imports.
+from qnahub import db  # Note: Consider moving db to its own file to avoid circular imports.
 from sqlalchemy import func, select
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -70,7 +70,7 @@ class Question(db.Model):
         )
 
     def __repr__(self):
-        return f"Question('{self.title}', '{self.date_posted}')"
+        return f"Question('{self.title}', '{self.body}', '{self.date_posted}')"
 
 
 class Answer(db.Model):
