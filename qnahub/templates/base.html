@@ -39,10 +39,10 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- ANONYMOUS USER VIEW -->
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary me-2" href="{{ url_for('login') }}">Sign In</a>
+                        <a class="btn btn-outline-primary me-2" href="{{ url_for('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="{{ url_for('register') }}">Sign Up</a>
+                        <a class="btn btn-primary" href="{{ url_for('register') }}">Register</a>
                     </li>
 
                     <!-- LOGGED-IN USER VIEW (for reference)
@@ -112,6 +112,10 @@
                     {% endfor %}
                     {% endif %}
                     {% endwith %}
+
+                    {% if current_user.is_authenticated %}
+                    hi {{ current_user.username }}
+                    {% endif %}
                 </div>
 
                 {% block content %}{% endblock %}
