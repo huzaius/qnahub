@@ -1,8 +1,0 @@
-{% extends 'base.html' %}
-{% block title %}{% endblock %}
-
-{% block content %}
-{% if current_user.is_authenticated %}
-hi {{ current_user.username }}
-{% endif %}
-{% endblock %}

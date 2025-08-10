@@ -19,6 +19,7 @@ def index():
 
 
 @app.route("/base")
+@login_required
 def base():
     return render_template("base.html")
 
@@ -38,8 +39,8 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data) :
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
-            flash(f"Account Login Successfully for {form.email.data}!", "success")
-            return redirect(next_page) if next_page else redirect(url_for("index"))
+            flash(f"Welcome back, {form.email.data}!", "info")
+            return redirect(next_page or url_for("index"))
      
         else:
             flash("Login Unsuccessful. Please check email and password", "danger")
@@ -89,9 +90,9 @@ def settings():
 @app.route("/account")
 @login_required
 def account():
-    return render_template("account.html")
+    return render_template("profile.html")
 
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("index"))
+    return redirect(url_for("login"))
