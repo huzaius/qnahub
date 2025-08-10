@@ -90,6 +90,7 @@ def settings():
 @app.route("/account")
 @login_required
 def account():
+
     return render_template("profile.html")
 
 @app.route("/logout")
