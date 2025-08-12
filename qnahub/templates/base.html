@@ -39,17 +39,15 @@
                 <ul class="navbar-nav ms-auto">
                     {% if current_user.is_authenticated %}
                     <!-- LOGGED-IN USER VIEW  -->
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="{{ url_for('question') }}">Ask a Question</a>
-                    </li>
+                    
                     <li class="nav-item dropdown ms-lg-3 mt-2 mt-lg-0">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            <img src="https://placehold.co/40x40/0d6efd/white?text=U" class="rounded-circle" width="32"
-                                height="32">
+                            <img src="{{url_for('static', filename='profile_pics/' + current_user.picture )}}" alt="User profile picture" class="rounded-circle" width="50"
+                                height="50">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{url_for('account')}}">My Account</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('settings')}}">My Account</a></li>
                             <li><a class="dropdown-item" href="#">My Questions</a></li>
                             <li>
                                 <hr class="dropdown-divider">

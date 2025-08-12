@@ -1,8 +1,120 @@
 {% extends 'base.html' %}
-{% block title %} Account {% endblock %}
-
 {% block content %}
-{% if current_user.is_authenticated %}
-<h1>Welcome, {{current_user.username.title()}}</h1> {#convert username to title case#}
-{% endif %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/profile.css') }}">
+
+<form method="POST" action="{{url_for('account') }}" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="card mb-3" style="border-radius: .5rem;">
+      <div class="row g-0">
+        <div class="col-md-4 gradient-custom text-center text-white"
+          style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+          <img class="rounded-circle mt-5 account-img"
+            src="{{url_for('static', filename='profile_pics/' + current_user.picture)}}" alt="Profile Picture"
+            class="img-fluid my-5" style="width: 80px;" />
+
+
+          {% if current_user.fullname %}
+          <h5>{{ current_user.fullname.title() }}</h5>
+          {% else %}
+          <h5>{{ current_user.username.title() }}</h5>
+          {% endif %}
+
+          <p>{{current_user.email}}</p>
+
+          <!--           Update Profile -->
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+
+          <div class="form-group mt-5">
+            <a class="bi bi-gear-fill" href="{{url_for('settings')}}">View Profile</a>
+          </div>
+
+
+        </div>
+        <div class="col-md-8">
+          <div class="card-body p-4">
+            <h6>Information</h6>
+
+            <hr class="mt-0 mb-4">
+            <div class="row pt-1">
+              <div class="col-6 mb-3">
+                <h6>Email</h6>
+                {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.email.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+              <div class="col-6 mb-3">
+                <h6>Username</h6>
+                {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.username.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %}
+                {{ form.username(class="form-control form-control-lg") }}
+                {% endif %}
+              </div>
+            </div>
+            <h6>Projects</h6>
+            <hr class="mt-0 mb-4">
+            <div class="row pt-1">
+              <div class="col-6 mb-3">
+                <h6>Recent</h6>
+                <p class="text-muted">Lorem ipsum</p>
+              </div>
+              <div class="col-6 mb-3">
+                <h6>Most Viewed</h6>
+                <p class="text-muted">Dolor sit amet</p>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              {{ form.picture(class="form-control-file") }}
+              {% if form.picture.errors %}
+              {% for error in form.picture.errors %}
+              <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+              {% endif %}
+
+            </div>
+
+
+
+            <div class="d-flex justify-content-start">
+              <hr class="mt-0 mb-4">
+            </div>
+            <div class="d-flex justify-content-start">
+
+
+
+              {% if form.fullname.errors %}
+              {{ form.fullname(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.fullname.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{ form.fullname(class="form-control form-control-lg",placeholder="Full Name") }}
+              {% endif %}
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+</form>
 {% endblock %}
