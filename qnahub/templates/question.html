@@ -1,64 +1,133 @@
-{% extends 'base.html' %}
-{% block title %} Questions {% endblock %}
-<!-- Ask a Question -->
+{% extends "base.html" %}
+
+{% block title %}{{ question.title }}{% endblock %}
+
 {% block content %}
+<!-- Question Header -->
+<div class="pb-3 mb-3 border-bottom">
+    <h2 class="fw-bold">{{ question.title }}</h2>
+    <div class="text-muted small">
+        <span>Asked on {{question.date_posted.strftime('%b %d, %Y')}} </span>
+        <span class="mx-2">|</span>
+        <span>Viewed {{ question.views }} times</span>
+        <span class="mx-2">|</span>
+        <span>Answered {{ question.answer_count }} times</span>
+       
+        <!-- Update / Delete for Current User -->
+        {% if question.author == current_user %}
+        <span class="mx-2">|</span>
+        <a class="btn btn-success btn-sm" href="{{ url_for('edit_question', question_id=question.id) }}">Edit</a>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+            data-bs-target="#deleteModal">Delete</button>
+        {% endif %}
 
-<!-- Main Content -->
-
-  <div class="row justify-content-center">
-   
-      <h2 class="fw-bold mb-4">Ask a Question</h2>
-
-      <!-- === Logged-IN User View: The Form === -->
-      <!-- To use this view, uncomment it and comment out the "Logged-OUT User View" -->
-      <div class="card form-card">
-        <div class="card-body p-4">
-          <form>
-            <!-- Title Field -->
-            <div class="mb-3">
-              <label for="question-title" class="form-label fw-semibold">Title</label>
-              <p class="form-text text-muted mt-0 mb-1">Give a title close enough to your quesion(s).</p>
-              <input type="text" class="form-control" id="question-title"
-                placeholder="e.g., How do I improve my eeman?">
+    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this question? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ url_for('delete_question', question_id=question.id) }}" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
             </div>
-
-            <!-- Body Field -->
-            <div class="mb-3">
-              <label for="question-body" class="form-label fw-semibold">Body</label>
-              <p class="form-text text-muted mt-0 mb-1">Include all the information someone would need to answer your
-                question.</p>
-              <textarea class="form-control" id="question-body" rows="10"></textarea>
-            </div>
-
-            <!-- Subjects/Tags Field -->
-            <div class="mb-3">
-              <label for="question-subjects" class="form-label fw-semibold">Subject(s)</label>
-              <p class="form-text text-muted mt-0 mb-1">Add subject(s) to describe what your question is about.
-              </p>
-              <input type="text" class="form-control" id="question-subjects"
-                placeholder="e.g., Dua Eeeman">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Post Your Question</button>
-          </form>
         </div>
-      </div>
+    </div>
+</div>
 
-      <!-- === Logged-OUT User View: The Prompt === -->
-      <!-- To use this view, uncomment it and comment out the "Logged-IN User View" -->
-      <!--
-                <div class="card text-center p-5">
-                    <div class="card-body">
-                        <i class="bi bi-lock-fill fs-1 text-primary mb-3"></i>
-                        <h4 class="card-title">You need to be logged in to ask a question.</h4>
-                        <p class="card-text">Create an account or sign in to join the community.</p>
-                        <a href="{{ url_for('login') }}" class="btn btn-primary">Sign In</a>
-                        <a href="{{ url_for('register') }}" class="btn btn-outline-secondary">Create an account</a>
+<div class="row">
+    <div class="col-12">
+        <!-- Question Body -->
+        <div class="d-flex align-items-start">
+            <!-- Vote Controls -->
+            <div class="vote-controls d-flex flex-column align-items-center me-3">
+                <a href="#" class="vote-btn" data-id="{{ question.id }}" data-type="question" data-direction="up"><i
+                        class="bi bi-caret-up-fill fs-4"></i></a>
+                <span class="vote-count" id="vote-count-question-{{ question.id }}">{{ question.votes }}</span>
+                <a href="#" class="vote-btn" data-id="{{ question.id }}" data-type="question" data-direction="down"><i
+                        class="bi bi-caret-down-fill fs-4"></i></a>
+            </div>
+            <!-- Question Text -->
+            <div class="flex-grow-1">
+                <p>{{ question.body|safe }}</p>
+                <div class="mt-4 d-flex justify-content-end">
+                    <div class="card user-info-card p-2" style="width: 250px;">
+                        <div class="text-muted small mb-1">asked {{ time_ago(question.date_posted) }}</div>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ url_for('static', filename='profile_pics/' + question.author.picture) }}"
+                                alt="{{ question.author.username }}" width="40" height="40" class="rounded me-2">
+                            <a href="#" class="text-decoration-none fw-bold">{{ question.author.username }}</a>
+                        </div>
                     </div>
                 </div>
-                -->
-   
-  </div>
+            </div>
+        </div>
+
+        <!-- Answers Section -->
+        <h4 class="my-4">{{ question.answer_count }} Answers</h4>
+
+        {% for answer in question.answers %}
+        <div class="d-flex align-items-start answer-card py-4">
+            <div class="vote-controls d-flex flex-column align-items-center me-3">
+                <a href="#" class="vote-btn" data-id="{{ answer.id }}" data-type="answer" data-direction="up"><i
+                        class="bi bi-caret-up-fill fs-4"></i></a>
+                <span class="vote-count" id="vote-count-answer-{{ answer.id }}">{{ answer.votes }}</span>
+                <a href="#" class="vote-btn" data-id="{{ answer.id }}" data-type="answer" data-direction="down"><i
+                        class="bi bi-caret-down-fill fs-4"></i></a>
+            </div>
+            <div class="flex-grow-1">
+                <p>{{ answer.body|safe }}</p>
+                <div class="mt-4 d-flex justify-content-end">
+                    <div class="card user-info-card p-2" style="width: 250px;">
+                        <div class="text-muted small mb-1">answered {{ time_ago(question.date_posted) }}</div>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ answer.author.avatar_url }}" alt="{{ answer.author.username }}" width="32"
+                                height="32" class="rounded me-2">
+                            <a href="#" class="text-decoration-none fw-bold">{{ answer.author.username }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Your Answer Form -->
+        <div class="mt-5">
+            <h4>Your Answer</h4>
+            {% if current_user.is_authenticated %}
+            <form action="{{ url_for('add_answer', question_id=question.id) }}" method="POST">
+                <div class="mb-3">
+                    <textarea class="form-control" name="answer_body" rows="8" placeholder="Write your answer here..."
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post Your Answer</button>
+            </form>
+            {% else %}
+
+            <!-- Login to Answer Quesions -->
+            <div class="card text-center p-5">
+                <div class="card-body">
+                    <i class="bi bi-lock-fill fs-1 text-primary mb-3"></i>
+                    <h4 class="card-title">You need to be logged in to ask a question.</h4>
+                    <p class="card-text">Create an account or sign in to join the community.</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">Sign In</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-secondary">Create an account</a>
+                </div>
+            </div>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

@@ -18,7 +18,9 @@
   </div>
 
   <!-- Question Card -->
-  <div class="card mb-3 shadow-sm question-card border-primary">
+   {% for question in questions %}
+  <!-- Question Card -->
+  <div class="card mb-3 shadow-sm question-card border-{{ colors[loop.index0 % colors|length] }}">
     <div class="card-body">
       <div class="d-flex">
         <div class="text-center me-3">
@@ -30,44 +32,25 @@
           <div class="text-muted small">answers</div>
         </div>
         <div class="flex-grow-1">
-          <h5 class="card-title"><a href="question.html" class="text-decoration-none">How to
-              vertically center a div?</a></h5>
+          <h5 class="card-title"><a href="{{url_for('question',question_id=question.id)}}" class="text-decoration-none"> {{question.title.title()}}</a></h5>
           <div class="mb-2">
-            <span class="badge bg-primary-subtle text-primary-emphasis">CSS</span>
-            <span class="badge bg-warning-subtle text-warning-emphasis">HTML</span>
+            <!-- {% for tag in question.tags %}
+            <span class="badge bg-primary-subtle text-primary-emphasis">{{tag}}</span>
+            {% endfor %} -->
           </div>
           <div class="text-muted small">
-            asked by <a href="#">John Doe</a> 2 hours ago
+            asked by <a href="#">{{question.author.username }}</a> {{ time_ago(question.date_posted) }}
           </div>
+        </div>
+        <div class="text-center me-3">
+          
+            <img class="img-fluid rounded-circle" width="60" height="60" src="{{ url_for('static', filename='profile_pics/' + question.author.picture) }}" >
+          
+          
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Another Question Card -->
-  <div class="card mb-3 shadow-sm question-card border-success">
-    <div class="card-body">
-      <div class="d-flex">
-        <div class="text-center me-3">
-          <div class="fw-bold fs-5">42</div>
-          <div class="text-muted small">votes</div>
-        </div>
-        <div class="text-center me-3">
-          <div class="fw-bold fs-5">15</div>
-          <div class="text-muted small">answers</div>
-        </div>
-        <div class="flex-grow-1">
-          <h5 class="card-title"><a href="question.html" class="text-decoration-none">What is the
-              difference between let, var, and const in JavaScript?</a></h5>
-          <div class="mb-2">
-            <span class="badge bg-info-subtle text-info-emphasis">JavaScript</span>
-          </div>
-          <div class="text-muted small">
-            asked by <a href="#">Jane Smith</a> 1 day ago
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% endfor %}
 
 {% endblock %}

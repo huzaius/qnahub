@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %} New Question {% endblock %}
+<!-- Ask a Question -->
+{% block content %}
+
+<!-- Main Content -->
+
+<div class="row justify-content-center">
+
+  <h2 class="fw-bold mb-4">{{legend}}</h2>
+
+
+  <div class="card form-card">
+    <div class="card-body p-4">
+      <form action="" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <!-- Title Field -->
+        <div class="mb-3">
+          <label for="question-title" class="form-label fw-semibold">Title</label>
+          <p class="form-text text-muted mt-0 mb-1">Give a title close enough to your quesion(s).</p>
+
+
+          {% if form.title.errors %}
+          {{ form.title(class="form-control form-control-lg is-invalid",autofocus=True) }}
+          <div class="invalid-feedback">
+            {% for error in form.title.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          {{form.title(class="form-control",placeholder="e.g., How do I improve my eeman?")}}
+          {% endif %}
+        </div>
+
+        <!-- Body Field -->
+        <div class="mb-3">
+          <label for="question-body" class="form-label fw-semibold">Body</label>
+          <p class="form-text text-muted mt-0 mb-1">Include all the information someone would need to answer your
+            question.</p>
+
+          
+          {% if form.body.errors %}
+          {{ form.body(class="form-control is-invalid",rows='8') }}
+          <div class="invalid-feedback">
+            {% for error in form.body.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          {{ form.body(class="form-control",rows='8') }}
+          {% endif %}
+        </div>
+
+        <!-- Subjects/Tags Field -->
+        <!-- <div class="mb-3">
+          <label for="question-subjects" class="form-label fw-semibold">Subject(s)/Tags(s)</label>
+          <p class="form-text text-muted mt-0 mb-1">Add subject(s) to describe what your question is about separated by
+            comma (,).
+          </p>
+          
+          {% if form.tags.errors %}
+          {{ form.tags(class="form-control is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.tags.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          {{ form.tags(class="form-control") }}
+          {% endif %}
+
+        </div> -->
+
+        <!-- Submit Button -->
+        {{ form.submit(class="btn btn-primary") }}
+
+      </form>
+    </div>
+  </div>
+
+
+
+ 
+
+
+
+</div>
+
+
+{% endblock %}

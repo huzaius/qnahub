@@ -2,5 +2,5 @@
 {% block title %}Subjects{% endblock %}
 {% block content %}
 <h1>Query DB by Subjects</h1>
-{{url_for('static', filename='profile_pics/ + current_user.picture')}}
+<img src={{url_for('static', filename='profile_pics/'+ current_user.picture)}}>
 {% endblock %}
