@@ -42,7 +42,9 @@ def index():
     # Create a copy of the colors list and shuffle it
     shuffled_colors = colors[:]
     shuffle(shuffled_colors)
-    return render_template("index.html", questions=questions, colors=shuffled_colors)
+    return render_template("index.html", questions=questions, colors=shuffled_colors,legend="All Questions",title="Q&A Hub - Home")
+
+
 
 @app.route("/base")
 @login_required
@@ -206,11 +208,23 @@ def add_answer(question_id):
         flash("Your answer has been posted!", "success")
     return redirect(url_for("question", question_id=question_id))
 
-@app.route("/users")
+@app.route("/user_posts/<string:username>")
 @login_required
-def users():
-    return render_template("users.html", title=current_user.username)
+def user_question(username):
+    page = request.args.get("page", 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    questions = Question.query.filter_by(author=user)\
+        .order_by( Question.date_posted.desc())\
+        .paginate(page=page, per_page=2)
+    # Create a copy of the colors list and shuffle it
+    shuffled_colors = colors[:]
+    shuffle(shuffled_colors)
+    return render_template("index.html", questions=questions, colors=shuffled_colors,legend=f'{username}\'s Questions',username=username,page=page,title='User Posts')
+   
 
+@app.route("/users")
+def users():
+    return render_template("users.html")
 
 @app.route("/subjects")
 def subjects():
