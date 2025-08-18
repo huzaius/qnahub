@@ -37,7 +37,8 @@ def utility_processor():
 @app.route("/index")
 @app.route("/")
 def index():
-    questions = Question.query.order_by(Question.date_posted.desc()).all()
+    page = request.args.get("page", 1, type=int)
+    questions = Question.query.order_by(Question.date_posted.desc()).paginate(page=page, per_page=2)
     # Create a copy of the colors list and shuffle it
     shuffled_colors = colors[:]
     shuffle(shuffled_colors)
