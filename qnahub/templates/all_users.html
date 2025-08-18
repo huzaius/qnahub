@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Users</h2>
+  <hr>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered thread-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col" style="width: 5%;">#</th>
+          <th scope="col">Fullname</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody class="align-middle">
+        {% for user in users %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ user.fullname or 'N/A' }}</td>
+          <td>
+            <img src="{{ url_for('static', filename='profile_pics/' + user.picture) }}" alt="{{ user.username }}'s profile picture" class="rounded-circle me-2" width="40" height="40">
+            <a class="text-info" href="{{url_for('user_question',username=user.username)}}">{{user.username}}</a>
+          </td>
+          <td>{{user.email}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

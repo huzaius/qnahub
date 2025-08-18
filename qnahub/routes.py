@@ -38,7 +38,7 @@ def utility_processor():
 @app.route("/")
 def index():
     page = request.args.get("page", 1, type=int)
-    questions = Question.query.order_by(Question.date_posted.desc()).paginate(page=page, per_page=2)
+    questions = Question.query.order_by(Question.date_posted.desc()).paginate(page=page, per_page=5)
     # Create a copy of the colors list and shuffle it
     shuffled_colors = colors[:]
     shuffle(shuffled_colors)
@@ -215,7 +215,7 @@ def user_question(username):
     user = User.query.filter_by(username=username).first_or_404()
     questions = Question.query.filter_by(author=user)\
         .order_by( Question.date_posted.desc())\
-        .paginate(page=page, per_page=2)
+        .paginate(page=page, per_page=5)
     # Create a copy of the colors list and shuffle it
     shuffled_colors = colors[:]
     shuffle(shuffled_colors)
@@ -224,7 +224,9 @@ def user_question(username):
 
 @app.route("/users")
 def users():
-    return render_template("users.html")
+    all_users = User.query.all()
+   
+    return render_template("all_users.html",users=all_users)
 
 @app.route("/subjects")
 def subjects():
