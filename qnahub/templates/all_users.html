@@ -25,12 +25,12 @@
           <td>
             <img src="{{ url_for('static', filename='profile_pics/' + user.picture) }}"
               alt="{{ user.username }}'s profile picture" class="rounded-circle me-2" width="40" height="40">
-            <a class="text-info" href="{{url_for('user_question',username=user.username)}}">{{user.username}}</a>
+            <a class="text-info" href="{{url_for('users.user_question',username=user.username)}}">{{user.username}}</a>
           </td>
           <td>{{user.email}}</td>
           <td>
             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
-              data-bs-url="{{ url_for('delete_user', user_id=user.id) }}"
+              data-bs-url="{{ url_for('users.delete_user', user_id=user.id) }}"
               data-bs-message="Are you sure you want to delete the user '{{ user.username }}'? This action cannot be undone.">Delete</button>
           </td>
         </tr>

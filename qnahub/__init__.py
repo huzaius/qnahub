@@ -18,4 +18,12 @@ login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
-from qnahub import routes
+from qnahub.main.views import main
+from qnahub.questions.views import questions
+from qnahub.answers.views import answers
+from qnahub.users.views import users
+
+app.register_blueprint(main)
+app.register_blueprint(questions)
+app.register_blueprint(answers)
+app.register_blueprint(users)

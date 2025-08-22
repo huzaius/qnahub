@@ -10,7 +10,7 @@
       Sort by: Newest
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" href="{{ url_for('index') }}">Newest</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('main.index') }}">Newest</a></li>
       <li><a class="dropdown-item" href="#">Most Voted</a></li>
       <li><a class="dropdown-item" href="#">Most Answered</a></li>
     </ul>
@@ -32,11 +32,11 @@
         <div class="text-muted small">answers</div>
       </div>
       <div class="flex-grow-1">
-        <h5 class="card-title"><a href="{{url_for('question',question_id=question.id)}}" class="text-decoration-none">
+        <h5 class="card-title"><a href="{{url_for('questions.question',question_id=question.id)}}" class="text-decoration-none">
             {{question.title.title()}}</a></h5>
        
         <div class="text-muted small">
-          asked by <a href="{{url_for('user_question',username=question.author.username)}}">{{question.author.username }}</a> {{ time_ago(question.date_posted) }}
+          asked by <a href="{{url_for('users.user_question',username=question.author.username)}}">{{question.author.username }}</a> {{ time_ago(question.date_posted) }}
         </div>
       </div>
       <div class="text-center me-3">
@@ -55,9 +55,9 @@
 {% for page_num in questions.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
     {% if page_num  %}
       {% if questions.page == page_num  %}
-        <a class="btn btn-info mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-info mb-4" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
         {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
       {%endif %}
     {% else %}
     ...
@@ -70,9 +70,9 @@
 {% for page_num in questions.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
     {% if page_num  %}
       {% if questions.page == page_num  %}
-        <a class="btn btn-info mb-4" href="{{ url_for('user_question',username=username, page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-info mb-4" href="{{ url_for('users.user_question',username=username, page=page_num) }}">{{ page_num }}</a>
         {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('user_question',username=username, page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('users.user_question',username=username, page=page_num) }}">{{ page_num }}</a>
       {%endif %}
     {% else %}
     ...

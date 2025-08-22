@@ -25,7 +25,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}"><i
+            <a class="navbar-brand fw-bold" href="{{ url_for('main.index') }}"><i
                     class="bi bi-chat-left-dots-fill text-primary"></i> Q&A
                 Hub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -47,12 +47,12 @@
                                 height="50">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{url_for('settings')}}">My Account</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('users.settings')}}">My Account</a></li>
                             <li><a class="dropdown-item" href="#">My Questions</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{{url_for('logout')}}">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('users.logout')}}">Logout</a></li>
                         </ul>
                     </li>
 
@@ -61,10 +61,10 @@
                     {% else %}
                     <!-- ANONYMOUS USER VIEW -->
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary me-2" href="{{ url_for('login') }}">Login</a>
+                        <a class="btn btn-outline-primary me-2" href="{{ url_for('users.login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="{{ url_for('register') }}">Register</a>
+                        <a class="btn btn-primary" href="{{ url_for('users.register') }}">Register</a>
                     </li>
                 </ul>
                 {% endif %}
@@ -82,23 +82,21 @@
             {% else %}
             <div class="col-lg-3">
                 <div class="list-group shadow-sm" id="sidebar-nav">
-                    <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action"><i
+                    <a href="{{ url_for('main.index') }}" class="list-group-item list-group-item-action"><i
                             class="bi bi-house-fill me-2"></i> Home</a>
-                    <a href="{{ url_for('subjects') }}" class="list-group-item list-group-item-action"><i
+                    <a href="{{ url_for('questions.subjects') }}" class="list-group-item list-group-item-action"><i
                             class="bi bi-tags-fill me-2"></i>
                         Subjects</a>
-                    <a href="{{ url_for('users') }}" class="list-group-item list-group-item-action"><i
+                    <a href="{{ url_for('users.all_users') }}" class="list-group-item list-group-item-action"><i
                             class="bi bi-people-fill me-2"></i>
                         All Users</a>
-                    <a href="{{ url_for('unanswered')}}" class="list-group-item list-group-item-action"><i
+                    <a href="{{ url_for('answers.unanswered')}}" class="list-group-item list-group-item-action"><i
                             class="bi bi-patch-question-fill me-2"></i> Unanswered</a>
                     
-                    <a href="{{ url_for('base')}}" class="list-group-item list-group-item-action"><i
-                            class="bi bi-patch-question-fill me-2"></i> base</a>
 
                 </div>
                 <div class="mt-4">
-                    <a class="btn btn-primary w-100" href="{{ url_for('new_question') }}">Ask a Question</a>
+                    <a class="btn btn-primary w-100" href="{{ url_for('questions.new_question') }}">Ask a Question</a>
                 </div>
             </div>
             {% endif %}

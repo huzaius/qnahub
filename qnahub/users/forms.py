@@ -1,11 +1,11 @@
-from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, StringField, PasswordField, SubmitField, TextAreaField, ValidationError
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from flask_login import current_user
 from qnahub.models import User
 
-# Registration Form
+
 class RegistrationForm(FlaskForm):
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=4, max=25)])
@@ -69,15 +69,3 @@ class UpdateProfileForm(FlaskForm):
             if user:
                 raise ValidationError(
                     "That username is taken. Please choose a different one.")
-
-# Ask Quesion Form
-class AskQuestionForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    body = TextAreaField("Content", validators=[DataRequired()])
-    tags = StringField("Tags")
-    submit = SubmitField("Post Your Question")
-
-    # def separate_tags(self,tags):
-    #     if self.tags.data:
-    #         return [tag.strip() for tag in self.tags.data.split(",")]
-        

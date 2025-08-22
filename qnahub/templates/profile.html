@@ -2,7 +2,7 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/profile.css') }}">
 
-<form method="POST" action="{{url_for('account') }}" enctype="multipart/form-data">
+<form method="POST" action="{{url_for('users.account') }}" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   <section class="vh-100" style="background-color: #f4f5f7;">
     <div class="card mb-3" style="border-radius: .5rem;">
@@ -10,7 +10,7 @@
         <div class="col-md-4 gradient-custom text-center text-white"
           style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
           <img class="rounded-circle mt-5 account-img"
-            src="{{url_for('static', filename='profile_pics/' + current_user.picture)}}" alt="Profile Picture"
+            src="{{ picture }}" alt="Profile Picture"
             class="img-fluid my-5" style="width: 80px;" />
 
 
@@ -28,7 +28,7 @@
           </div>
 
           <div class="form-group mt-5">
-            <a class="bi bi-gear-fill" href="{{url_for('settings')}}">View Profile</a>
+            <a class="bi bi-gear-fill" href="{{url_for('users.settings')}}">View Profile</a>
           </div>
 
 
