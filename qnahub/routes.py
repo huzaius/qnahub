@@ -177,13 +177,10 @@ def edit_question(question_id):
         question.body = form.body.data 
         db.session.commit()
         flash("Your question has been updated!", "success")
-        return redirect(url_for("question", question_id=question.id))
-    
+        return redirect(url_for("question", question_id=question.id))  
     elif request.method == "GET":
         form.title.data = question.title
         form.body.data = question.body
-
-
     return render_template("new_question.html", form=form, legend="Edit Question")
 
 @app.route("/delete_question/<int:question_id>", methods=["POST"])
@@ -195,7 +192,8 @@ def delete_question(question_id):
     db.session.delete(question)
     db.session.commit()
     flash('Your question has been deleted!', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('question', question_id=question.id))
+
 
 @app.route("/add_answer/<int:question_id>", methods=["POST"])
 def add_answer(question_id):
@@ -203,10 +201,39 @@ def add_answer(question_id):
     answer_body = request.form.get("answer_body")
     if answer_body:
         answer = Answer(body=answer_body, question=question, author=current_user)
-        # db.session.add(answer)
-        # db.session.commit()
+        db.session.add(answer)
+        db.session.commit()
         flash("Your answer has been posted!", "success")
     return redirect(url_for("question", question_id=question_id))
+
+@app.route("/delete_answer/<int:answer_id>", methods=["POST"])
+@login_required
+def delete_answer(answer_id):
+    answer = Answer.query.get_or_404(answer_id)
+    if answer.author != current_user:
+        abort(403)
+    db.session.delete(answer)
+    db.session.commit()
+    flash('Your answer has been deleted!', 'success')
+    return redirect(url_for('question', question_id=answer.question_id))
+
+@app.route("/edit_answer/<int:answer_id>", methods=["GET", "POST"])
+@login_required
+def edit_answer(answer_id):
+    answer = Answer.query.get_or_404(answer_id)
+    if answer.author != current_user:
+        abort(403)
+    form = AskQuestionForm()
+    if form.validate_on_submit():
+        answer.body = form.body.data
+        db.session.commit()
+        flash("Your answer has been updated!", "success")
+        return redirect(url_for("question", question_id=answer.question.id))
+    elif request.method == "GET":
+        form.body.data = answer.body
+    return render_template("new_question.html", form=form, legend="Edit Answer")
+
+
 
 @app.route("/user_posts/<string:username>")
 @login_required
@@ -227,6 +254,21 @@ def users():
     all_users = User.query.all()
    
     return render_template("all_users.html",users=all_users)
+
+@app.route("/delete_user/<int:user_id>", methods=["POST"])
+@login_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user != current_user:
+        abort(403)
+    db.session.delete(user)
+    db.session.commit()
+    flash('Your account has been deleted!', 'danger')
+    return redirect(url_for('users'))
+
+@app.route("/tags")
+def tags():
+    return render_template("tags.html")
 
 @app.route("/subjects")
 def subjects():

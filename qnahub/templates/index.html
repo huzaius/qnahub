@@ -10,7 +10,7 @@
       Sort by: Newest
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" href="#">Newest</a></li>
+      <li><a class="dropdown-item" href="{{ url_for('index') }}">Newest</a></li>
       <li><a class="dropdown-item" href="#">Most Voted</a></li>
       <li><a class="dropdown-item" href="#">Most Answered</a></li>
     </ul>
@@ -34,11 +34,7 @@
       <div class="flex-grow-1">
         <h5 class="card-title"><a href="{{url_for('question',question_id=question.id)}}" class="text-decoration-none">
             {{question.title.title()}}</a></h5>
-        <div class="mb-2">
-          <!-- {% for tag in question.tags %}
-            <span class="badge bg-primary-subtle text-primary-emphasis">{{tag}}</span>
-            {% endfor %} -->
-        </div>
+       
         <div class="text-muted small">
           asked by <a href="{{url_for('user_question',username=question.author.username)}}">{{question.author.username }}</a> {{ time_ago(question.date_posted) }}
         </div>
@@ -47,7 +43,6 @@
 
         <img class="img-fluid rounded-circle" width="60" height="60"
           src="{{ url_for('static', filename='profile_pics/' + question.author.picture) }}">
-
 
       </div>
     </div>
